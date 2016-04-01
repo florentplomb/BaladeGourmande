@@ -2,11 +2,10 @@
   "name": "balademap",
   "version": "0.0.0",
   "dependencies": {
+    "bower": "^1.7.7",
     "express": "^4.13.4",
     "gzippo": "^0.2.0",
-    "morgan": "^1.7.0",
-    "bower": "latest"
-
+    "morgan": "^1.7.0"
   },
   "devDependencies": {
     "grunt": "^0.4.1",
