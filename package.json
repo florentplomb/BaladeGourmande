@@ -37,7 +37,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-  	"start": "node server/app.js",
+  	"start": "node scripts/app.js",
     "test": "grunt test"
   }
 }
