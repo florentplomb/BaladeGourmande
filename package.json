@@ -41,7 +41,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "start": "node scripts/app.js",
+    "start": "node web.js",
     "test": "grunt test"
   }
 }
