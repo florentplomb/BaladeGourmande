@@ -11,8 +11,7 @@
 angular
   .module('baladeMapApp', [
     'ngRoute',
-    'leaflet-directive',
-    'ngDialog'
+    'leaflet-directive'
   ])
   .config(function($routeProvider) {
     $routeProvider
