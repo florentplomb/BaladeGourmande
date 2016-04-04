@@ -15,9 +15,6 @@ float: left;
 }
 
 
-
-
-
 #info{
   
   height: 100%;
@@ -49,3 +46,7 @@ float: left;
     width: 80%; /* Could be more or less, depending on screen size */
 }
 
+.awesome-marker i {
+        font-size: 22px;
+        
+    }

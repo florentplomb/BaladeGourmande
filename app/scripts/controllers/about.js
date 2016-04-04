@@ -2,7 +2,7 @@
 
 var mapModule = angular.module('baladeMapApp');
 
-mapModule.controller('AboutCtrl', ["$scope", "$timeout", "leafletData", function($scope, $timeout, leafletData) {
+mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, leafletData) {
 	angular.extend($scope, {
 		center: {
 			lat: 46.833056,
@@ -32,7 +32,7 @@ mapModule.controller('AboutCtrl', ["$scope", "$timeout", "leafletData", function
 
 	leafletData.getMap().then(function(map) {
 
-
+		L.AwesomeMarkers.Icon.prototype.options.prefix = 'ion';
 		var featureGroup = L.featureGroup().addTo(map);
 
 		var drawControl = new L.Control.Draw({
@@ -52,20 +52,27 @@ mapModule.controller('AboutCtrl', ["$scope", "$timeout", "leafletData", function
 		map.on('draw:drawstart', function(e) {
 
 			var type = e.layerType,
-			layer = e.layer;
+				layer = e.layer;
 			if (type === 'marker') {
 				$scope.showNewMarker = true;
 			}
-
 		});
+
+
+
 		map.on('draw:created', drawCreated);
 		map.on('draw:edited', drawEdited);
 
 		function drawCreated(e) {
 			var type = e.layerType,
-			layer = e.layer;
+				layer = e.layer;
 			if (type === 'marker') {
 				console.log($scope.markerMsg);
+				layer.setIcon(L.AwesomeMarkers.icon({
+					icon: 'ion-wineglass',
+					markerColor: 'red'
+
+				}));
 				// layer.setIcon(L.icon({
 				// 	// iconUrl: 'images/yeoman.png',
 				// 	// iconRetinaUrl: 'my-icon@2x.png',
@@ -78,6 +85,27 @@ mapModule.controller('AboutCtrl', ["$scope", "$timeout", "leafletData", function
 				// 	// shadowAnchor: [22, 94]
 				// }));
 				layer.bindPopup("<img src='images/yeoman.png'/> <dl><dd>" + $scope.markerMsg + "<dd></dl>");
+			}
+
+			if (type === 'polyline') {
+
+				var tempLatLng = null;
+				var totalDistance = 0.00000;
+				$.each(e.layer._latlngs, function(i, latlng) {
+					if (tempLatLng == null) {
+						tempLatLng = latlng;
+						return;
+					}
+
+					totalDistance += tempLatLng.distanceTo(latlng);
+					tempLatLng = latlng;
+
+					console.log(totalDistance);
+				});
+
+				$scope.lineDistance = totalDistance;
+
+				layer.bindLabel((totalDistance / 1000).toFixed(3) + 'km');
 			}
 
 			// featureGroup.clearLayers();
@@ -96,24 +124,6 @@ mapModule.controller('AboutCtrl', ["$scope", "$timeout", "leafletData", function
 		}
 
 
-		$scope.upload = function (dataUrl, name) {
-			Upload.upload({
-				url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-				data: {
-					file: Upload.dataUrltoBlob(dataUrl, name)
-				},
-			}).then(function (response) {
-				$timeout(function () {
-					$scope.result = response.data;
-				});
-			}, function (response) {
-				if (response.status > 0) $scope.errorMsg = response.status 
-					+ ': ' + response.data;
-			}, function (evt) {
-				$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
-			});
-		}
-
 
 		leafletData.getLayers().then(function(baselayers) {
 			var drawnItems = baselayers.overlays.draw;
@@ -125,3 +135,24 @@ mapModule.controller('AboutCtrl', ["$scope", "$timeout", "leafletData", function
 		});
 	});
 }]);
+
+
+//*** upload image ****///
+
+// $scope.upload = function (dataUrl, name) {
+// 	Upload.upload({
+// 		url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+// 		data: {
+// 			file: Upload.dataUrltoBlob(dataUrl, name)
+// 		},
+// 	}).then(function (response) {
+// 		$timeout(function () {
+// 			$scope.result = response.data;
+// 		});
+// 	}, function (response) {
+// 		if (response.status > 0) $scope.errorMsg = response.status 
+// 			+ ': ' + response.data;
+// 	}, function (evt) {
+// 		$scope.progress = parseInt(100.0 * evt.loaded / evt.total);
+// 	});
+// }
