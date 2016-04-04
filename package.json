@@ -44,6 +44,7 @@
   "scripts": {
     "postinstall": "./node_modules/bower/bin/bower install",
     "start": "node web.js",
+    "postinstall": "./node_modules/bower/bin/bower install",
     "test": "grunt test"
   }
 }
