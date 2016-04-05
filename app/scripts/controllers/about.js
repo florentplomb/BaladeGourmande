@@ -30,6 +30,13 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 		}
 	});
 
+	$scope.checkboxMarkerChoice = {
+		wine : false,
+		parking : false,
+		start : false,
+		finish :false
+	};
+
 	leafletData.getMap().then(function(map) {
 
 		L.AwesomeMarkers.Icon.prototype.options.prefix = 'ion';
@@ -52,7 +59,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 		map.on('draw:drawstart', function(e) {
 
 			var type = e.layerType,
-				layer = e.layer;
+			layer = e.layer;
 			if (type === 'marker') {
 				$scope.showNewMarker = true;
 			}
@@ -65,12 +72,14 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 
 		function drawCreated(e) {
 			var type = e.layerType,
-				layer = e.layer;
+			layer = e.layer;
 			if (type === 'marker') {
 				console.log($scope.markerMsg);
 				layer.setIcon(L.AwesomeMarkers.icon({
 					icon: 'ion-wineglass',
-					markerColor: 'red'
+					markerColor: 'red',
+				//	iconColor : '#12b345',
+				//	extraClasses : 'markerFlag' 
 
 				}));
 				// layer.setIcon(L.icon({

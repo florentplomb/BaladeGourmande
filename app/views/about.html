@@ -19,13 +19,23 @@
 
 			<div id="cat">
 				<div class="markersList">
-					<div id="markerWine" class="awesome-marker-icon-red awesome-marker" tabindex="0" style="width: 35px; height: 45px;  z-index: 88;"><i class=" ion ion-wineglass  icon-white"></i></div>
-					<label><input type="checkbox" name="option3" value="Cheese"></label>
+					<div class="awesome-marker-icon-red awesome-marker markerPosition" tabindex="0" style="width: 35px; height: 45px;  z-index: 88;"><i class=" ion ion-wineglass  icon-white"></i></div>
+					<label><input type="checkbox" ng-model="chkBxMarkersChoice.wine"></label>
 				</div>
 				<div class="markersList">
-					<div id="markerWine" class="awesome-marker-icon-red awesome-marker" tabindex="0" style="width: 35px; height: 45px;  z-index: 88;"><i class=" ion ion-wineglass  icon-white"></i></div>
-					<label><input type="checkbox" name="option3" value="Cheese"></label>
+					<div class="awesome-marker-icon-darkblue awesome-marker markerPosition" tabindex="0" style="width: 35px; height: 45px;  z-index: 88;"><i class=" ion ion-model-s icon-white"></i></div>
+					<label><input type="checkbox" ng-model="chkBxMarkersChoice.parking"></label>
 				</div>
+				<div class="markersList">
+					<div class="awesome-marker-icon-green awesome-marker markerPosition" tabindex="0" style="width: 35px; height: 45px;  z-index: 88;"><i class=" ion ion-flag  icon-white"></i></div>
+					<label><input type="checkbox" ng-model="chkBxMarkersChoice.start"></label>
+				</div>
+				<div class="markersList">
+					<div class="awesome-marker-icon-orange awesome-marker markerPosition" tabindex="0" style="width: 35px; height: 45px;  z-index: 88;"><i class=" ion ion-flag  icon-white"></i></div>
+					<label><input type="checkbox" ng-model="chkBxMarkersChoice.finish"></label>
+				</div>
+
+
 			</div>
 
 			<!-- 	<div class="checkbox">
@@ -42,28 +52,10 @@
 
 	<div id="info">
 
-<script>
-  angular.module('checkboxExample', [])
-    .controller('ExampleController', ['$scope', function($scope) {
-      $scope.checkboxModel = {
-       value1 : true,
-       value2 : 'YES'
-     };
-    }]);
-</script>
-<form name="myForm" ng-controller="ExampleController">
-  <label>Value1:
-    <input type="checkbox" ng-model="checkboxModel.value1">
-  </label><br/>
-  <label>Value2:
-    <input type="checkbox" ng-model="checkboxModel.value2"
-           ng-true-value="'YES'" ng-false-value="'NO'">
-   </label><br/>
-  <tt>value1 = {{checkboxModel.value1}}</tt><br/>
-  <tt>value2 = {{checkboxModel.value2}}</tt><br/>
- </form>
-
-		<p> test : {{lineDistance}} </p>
+		<p> test : {{chkBxMarkersChoice.parking}} </p>
+		<p> test : {{chkBxMarkersChoice.start}} </p>
+		<p> test : {{chkBxMarkersChoice.finish}} </p>
+		<p> test : {{chkBxMarkersChoice.wine}} </p>
 
 	</div>
 

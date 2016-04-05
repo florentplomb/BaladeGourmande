@@ -22,16 +22,33 @@ float: left;
   background-color: blue;
 }
 
-/* Marker choice */
 
-#markerWine {
+
+/* Marker on map */
+
+
+/* Marker on choice modal */
+
+.markerPosition {
   position: static;
+}
+
+.awesome-marker .ion-flag {
+  margin-left: 0.3em;
+}
+
+.awesome-marker .ion-model-s {
+font-size: 18px;
+margin-bottom: 0.1em;
+
+
 }
 
 .markersList{
     display: inline-block;
     text-align: center;
 }
+
 
 
 /* The Modal (background) */
