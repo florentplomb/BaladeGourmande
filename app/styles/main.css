@@ -22,6 +22,17 @@ float: left;
   background-color: blue;
 }
 
+/* Marker choice */
+
+#markerWine {
+  position: static;
+}
+
+.markersList{
+    display: inline-block;
+    text-align: center;
+}
+
 
 /* The Modal (background) */
 .modal {
