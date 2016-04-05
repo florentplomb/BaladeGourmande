@@ -44,6 +44,6 @@
   "scripts": {
     "postinstall": "bower cache clean && bower install",
     "start": "node web.js",
-    "test": "grunt test"
+    
   }
 }
