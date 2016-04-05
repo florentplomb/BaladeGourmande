@@ -15,6 +15,12 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 					name: 'OpenStreetMap',
 					url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 					type: 'xyz'
+				},
+
+				other:{
+					name: 'foret',
+					url: 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png',
+					type: 'xyz'
 				}
 			},
 			overlays: {
@@ -32,6 +38,9 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 
 	leafletData.getMap().then(function(map) {
 
+		
+
+
 		L.AwesomeMarkers.Icon.prototype.options.prefix = 'ion';
 		var featureGroup = L.featureGroup().addTo(map);
 
@@ -48,76 +57,56 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 			}
 		}).addTo(map);
 
-$scope.checkboxMarkerChoice = {
-	wine : false,
-	parking : false,
-	start : false,
-	finish :false
-};
+
+		$scope.$watch('radioMarkersChoice', function() { console.log($scope.radioMarkersChoice) }, true);
 
 
+		$scope.markersStyle = {
+			wine: {
+				icon:'ion-wineglass',
+				markerColor:'red'
+			},
+			parking:{
+				icon:'ion-model-s',
+				markerColor:'darkblue'
 
-		$scope.updateSelection = function(index) {
-			angular.forEach($scope.checkboxMarkerChoice, function(value, key) {
-				if (index != key) {
-					console.log(key);
-					$scope.checkboxMarkerChoice.finish = false;
-				}
-			});
+			},
+			start:{
+				icon:'ion-flag',
+				markerColor:'green'
 
+			},
+			finish:{
+				icon:'ion-flag',
+				markerColor:'orange'
+			}
 
-			
-  // angular.forEach(entities, function(subscription, index) {
-  //   if (position != index) 
-  //     subscription.checked = false;
-  // });
-}
+		}
 
-
-var markersStyle = {
-	wine: {
-		icon:'ion-wineglass',
-		markerColor:'red'
-	},
-	parking:{
-		icon:'ion-model-s',
-		markerColor:'darkblue'
-
-	},
-	start:{
-		icon:'ion-flag',
-		markerColor:'green'
-
-	},
-	finish:{
-		icon:'ion-flag',
-		markerColor:'orange'
-	}
-
-}
+		$scope.radioMarkersChoice = $scope.markersStyle.wine;
 
 
-map.on('draw:drawstart', function(e) {
+		map.on('draw:drawstart', function(e) {
 
-	var type = e.layerType,
-	layer = e.layer;
-	if (type === 'marker') {
-		$scope.showNewMarker = true;
-	}
-});
-
-
-map.on('draw:created', drawCreated);
-map.on('draw:edited', drawEdited);
-
-function drawCreated(e) {
-	var type = e.layerType,
-	layer = e.layer;
-	if (type === 'marker') {
-		console.log($scope.markerMsg);
+			var type = e.layerType,
+			layer = e.layer;
+			if (type === 'marker') {
+				$scope.showNewMarker = true;
+			}
+		});
 
 
-		layer.setIcon(L.AwesomeMarkers.icon());
+		map.on('draw:created', drawCreated);
+		map.on('draw:edited', drawEdited);
+
+		function drawCreated(e) {
+			var type = e.layerType,
+			layer = e.layer;
+			if (type === 'marker') {
+				console.log($scope.markerMsg);
+
+
+				layer.setIcon(L.AwesomeMarkers.icon($scope.radioMarkersChoice));
 				// layer.setIcon(L.icon({
 				// 	// iconUrl: 'images/yeoman.png',
 				// 	// iconRetinaUrl: 'my-icon@2x.png',
@@ -157,6 +146,7 @@ function drawCreated(e) {
 			featureGroup.addLayer(e.layer);
 			// e.layer.bindPopup(' km<sup>2</sup>');
 			// e.layer.openPopup();
+
 		}
 
 
