@@ -43,7 +43,7 @@
   },
   "scripts": {
     "postinstall": "bower cache clean && bower install",
-    "start": "node web.js",
+    "start": "node web.js"
     
   }
 }
