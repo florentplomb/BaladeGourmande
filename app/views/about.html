@@ -19,20 +19,20 @@
 
 			<div id="cat">
 				<div class="markersList">
-					<div class="awesome-marker-icon-red awesome-marker markerPosition" tabindex="0" style="width: 35px; height: 45px;  z-index: 88;"><i class=" ion ion-wineglass  icon-white"></i></div>
-					<label><input type="checkbox" ng-model="chkBxMarkersChoice.wine"></label>
+					<div class="awesome-marker-icon-red awesome-marker markerPosition"><i class=" ion ion-wineglass  icon-white"></i></div>
+					<label><input type="checkbox" ng-model="chkBxMarkersChoice.wine" ng-click="updateSelection('wine')"></label>
 				</div>
 				<div class="markersList">
-					<div class="awesome-marker-icon-darkblue awesome-marker markerPosition" tabindex="0" style="width: 35px; height: 45px;  z-index: 88;"><i class=" ion ion-model-s icon-white"></i></div>
-					<label><input type="checkbox" ng-model="chkBxMarkersChoice.parking"></label>
+					<div class="awesome-marker-icon-darkblue awesome-marker markerPosition"><i class=" ion ion-model-s icon-white"></i></div>
+					<label><input type="checkbox" ng-model="chkBxMarkersChoice.parking" ng-click="updateSelection('parking')"></label>
 				</div>
 				<div class="markersList">
-					<div class="awesome-marker-icon-green awesome-marker markerPosition" tabindex="0" style="width: 35px; height: 45px;  z-index: 88;"><i class=" ion ion-flag  icon-white"></i></div>
-					<label><input type="checkbox" ng-model="chkBxMarkersChoice.start"></label>
+					<div class="awesome-marker-icon-green awesome-marker markerPosition"><i class=" ion ion-flag  icon-white"></i></div>
+					<label><input type="checkbox" ng-model="chkBxMarkersChoice.start" ng-click="updateSelection('start')"></label>
 				</div>
 				<div class="markersList">
-					<div class="awesome-marker-icon-orange awesome-marker markerPosition" tabindex="0" style="width: 35px; height: 45px;  z-index: 88;"><i class=" ion ion-flag  icon-white"></i></div>
-					<label><input type="checkbox" ng-model="chkBxMarkersChoice.finish"></label>
+					<div class="awesome-marker-icon-orange awesome-marker markerPosition"><i class=" ion ion-flag  icon-white"></i></div>
+					<label><input type="checkbox" ng-model="chkBxMarkersChoice.finish" ng-click="updateSelection('finish')"></label>
 				</div>
 
 
@@ -51,7 +51,6 @@
 	</div>
 
 	<div id="info">
-
 		<p> test : {{chkBxMarkersChoice.parking}} </p>
 		<p> test : {{chkBxMarkersChoice.start}} </p>
 		<p> test : {{chkBxMarkersChoice.finish}} </p>

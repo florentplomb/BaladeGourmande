@@ -30,13 +30,6 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 		}
 	});
 
-	$scope.checkboxMarkerChoice = {
-		wine : false,
-		parking : false,
-		start : false,
-		finish :false
-	};
-
 	leafletData.getMap().then(function(map) {
 
 		L.AwesomeMarkers.Icon.prototype.options.prefix = 'ion';
@@ -55,33 +48,76 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 			}
 		}).addTo(map);
 
-
-		map.on('draw:drawstart', function(e) {
-
-			var type = e.layerType,
-			layer = e.layer;
-			if (type === 'marker') {
-				$scope.showNewMarker = true;
-			}
-		});
+$scope.checkboxMarkerChoice = {
+	wine : false,
+	parking : false,
+	start : false,
+	finish :false
+};
 
 
 
-		map.on('draw:created', drawCreated);
-		map.on('draw:edited', drawEdited);
+		$scope.updateSelection = function(index) {
+			angular.forEach($scope.checkboxMarkerChoice, function(value, key) {
+				if (index != key) {
+					console.log(key);
+					$scope.checkboxMarkerChoice.finish = false;
+				}
+			});
 
-		function drawCreated(e) {
-			var type = e.layerType,
-			layer = e.layer;
-			if (type === 'marker') {
-				console.log($scope.markerMsg);
-				layer.setIcon(L.AwesomeMarkers.icon({
-					icon: 'ion-wineglass',
-					markerColor: 'red',
-				//	iconColor : '#12b345',
-				//	extraClasses : 'markerFlag' 
 
-				}));
+			
+  // angular.forEach(entities, function(subscription, index) {
+  //   if (position != index) 
+  //     subscription.checked = false;
+  // });
+}
+
+
+var markersStyle = {
+	wine: {
+		icon:'ion-wineglass',
+		markerColor:'red'
+	},
+	parking:{
+		icon:'ion-model-s',
+		markerColor:'darkblue'
+
+	},
+	start:{
+		icon:'ion-flag',
+		markerColor:'green'
+
+	},
+	finish:{
+		icon:'ion-flag',
+		markerColor:'orange'
+	}
+
+}
+
+
+map.on('draw:drawstart', function(e) {
+
+	var type = e.layerType,
+	layer = e.layer;
+	if (type === 'marker') {
+		$scope.showNewMarker = true;
+	}
+});
+
+
+map.on('draw:created', drawCreated);
+map.on('draw:edited', drawEdited);
+
+function drawCreated(e) {
+	var type = e.layerType,
+	layer = e.layer;
+	if (type === 'marker') {
+		console.log($scope.markerMsg);
+
+
+		layer.setIcon(L.AwesomeMarkers.icon());
 				// layer.setIcon(L.icon({
 				// 	// iconUrl: 'images/yeoman.png',
 				// 	// iconRetinaUrl: 'my-icon@2x.png',
