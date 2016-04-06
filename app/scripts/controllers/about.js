@@ -50,7 +50,12 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 			},
 			draw: {
 				polygon: false,
-				polyline: true,
+				polyline: {
+					shapeOptions : {
+                        color : '#d907ea',
+                        opacity : 0.7	
+                    }
+				},
 				rectangle: false,
 				circle: false,
 				marker: true
