@@ -3,6 +3,12 @@
 	<leaflet lf-center="center"  layers="layers" width="100%" height="100%"></leaflet>
 </div>
 
+<div id="info"  class="infoStyle">
+		<h1> Balade Gourmande de Grandson et sa région </h1>
+
+
+	</div>
+
 
 <!-- The Modal -->
 <div id="myModal" class="modal" ng-show="showNewMarker">
@@ -11,8 +17,10 @@
 	<div class="modal-content">
 		<form>
 			<div class="form-group">
+				<label for="exampleInputEmail1">Titre </label>
+				<input type="text" class="form-control" ng-model="marker.title" maxlength="15">
 				<label for="exampleInputEmail1">Description du stand (max 150 char.)</label>
-				<textarea class="form-control" ng-model="markerMsg" maxlength="150" rows="3"></textarea>
+				<textarea class="form-control" ng-model="marker.message" maxlength="150" rows="3"></textarea>
 			</div>
 			
 
@@ -50,11 +58,7 @@
 
 	</div>
 
-	<div id="info">
-		<p> test : {{radioMarkersChoice}} </p>
 	
-
-	</div>
 
 
 

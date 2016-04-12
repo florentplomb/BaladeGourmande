@@ -52,9 +52,9 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 				polygon: false,
 				polyline: {
 					shapeOptions : {
-                        color : '#d907ea',
-                        opacity : 0.7	
-                    }
+						color : '#d907ea',
+						opacity : 0.7	
+					}
 				},
 				rectangle: false,
 				circle: false,
@@ -88,10 +88,13 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 
 		}
 
-		$scope.radioMarkersChoice = $scope.markersStyle.wine;
+
 
 
 		map.on('draw:drawstart', function(e) {
+
+			$scope.radioMarkersChoice = $scope.markersStyle.wine;
+			$scope.marker = {};
 
 			var type = e.layerType,
 			layer = e.layer;
@@ -110,7 +113,6 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 			if (type === 'marker') {
 				console.log($scope.markerMsg);
 
-
 				layer.setIcon(L.AwesomeMarkers.icon($scope.radioMarkersChoice));
 				// layer.setIcon(L.icon({
 				// 	// iconUrl: 'images/yeoman.png',
@@ -123,7 +125,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 				// 	// shadowSize: [68, 95],
 				// 	// shadowAnchor: [22, 94]
 				// }));
-				layer.bindPopup("<img src='images/yeoman.png'/> <dl><dd>" + $scope.markerMsg + "<dd></dl>");
+				layer.bindPopup("<strong>" + $scope.marker.title + "</strong><dl><dd>" + $scope.marker.message + "<dd></dl>");
 			}
 
 			if (type === 'polyline') {
@@ -147,7 +149,15 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 				layer.bindLabel((totalDistance / 1000).toFixed(3) + 'km');
 			}
 
+			
+
+			$scope.newMarker = e.layer.toGeoJSON();
+			$scope.newMarker.properties = $scope.marker;
+			angular.extend($scope.newMarker.properties, $scope.radioMarkersChoice);
+
+			console.log(JSON.stringify($scope.newMarker));
 			// featureGroup.clearLayers();
+
 			featureGroup.addLayer(e.layer);
 			// e.layer.bindPopup(' km<sup>2</sup>');
 			// e.layer.openPopup();
