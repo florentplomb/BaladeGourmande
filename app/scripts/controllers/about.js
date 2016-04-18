@@ -9,7 +9,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 
 	$http.get("/api").success(function(data) {
 		
-		var socket = io.connect('http://localhost:' + data.port);
+		var socket = io.connect('http://mapbaladegourmande.herokuapp.com/');
 	});
 
 	angular.extend($scope, {
@@ -106,7 +106,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 			$scope.marker = {};
 
 			var type = e.layerType,
-				layer = e.layer;
+			layer = e.layer;
 			if (type === 'marker') {
 				$scope.showNewMarker = true;
 			}
@@ -118,7 +118,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 
 		function drawCreated(e) {
 			var type = e.layerType,
-				layer = e.layer;
+			layer = e.layer;
 			if (type === 'marker') {
 				console.log($scope.markerMsg);
 
