@@ -1,9 +1,17 @@
 'use strict';
 
+
+
 var mapModule = angular.module('baladeMapApp');
 
-mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, leafletData) {
-	var socket = io.connect('http://localhost:3000');
+
+mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($scope, leafletData, $http) {
+
+	$http.get("/api").success(function(data) {
+		
+		var socket = io.connect('http://localhost:' + data.port);
+	});
+
 	angular.extend($scope, {
 		center: {
 			lat: 46.833056,
@@ -18,7 +26,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 					type: 'xyz'
 				},
 
-				other:{
+				other: {
 					name: 'foret',
 					url: 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png',
 					type: 'xyz'
@@ -39,7 +47,6 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 
 	leafletData.getMap().then(function(map) {
 
-		
 
 
 		L.AwesomeMarkers.Icon.prototype.options.prefix = 'ion';
@@ -52,9 +59,9 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 			draw: {
 				polygon: false,
 				polyline: {
-					shapeOptions : {
-						color : '#d907ea',
-						opacity : 0.7	
+					shapeOptions: {
+						color: '#d907ea',
+						opacity: 0.7
 					}
 				},
 				rectangle: false,
@@ -64,31 +71,32 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 		}).addTo(map);
 
 
-		$scope.$watch('radioMarkersChoice', function() { console.log($scope.radioMarkersChoice) }, true);
+		$scope.$watch('radioMarkersChoice', function() {
+			console.log($scope.radioMarkersChoice)
+		}, true);
 
 
 		$scope.markersStyle = {
 			wine: {
-				icon:'ion-wineglass',
-				markerColor:'red'
+				icon: 'ion-wineglass',
+				markerColor: 'red'
 			},
-			parking:{
-				icon:'ion-model-s',
-				markerColor:'darkblue'
+			parking: {
+				icon: 'ion-model-s',
+				markerColor: 'darkblue'
 
 			},
-			start:{
-				icon:'ion-flag',
-				markerColor:'green'
+			start: {
+				icon: 'ion-flag',
+				markerColor: 'green'
 
 			},
-			finish:{
-				icon:'ion-flag',
-				markerColor:'orange'
+			finish: {
+				icon: 'ion-flag',
+				markerColor: 'orange'
 			}
 
 		}
-
 
 
 
@@ -98,7 +106,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 			$scope.marker = {};
 
 			var type = e.layerType,
-			layer = e.layer;
+				layer = e.layer;
 			if (type === 'marker') {
 				$scope.showNewMarker = true;
 			}
@@ -110,7 +118,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 
 		function drawCreated(e) {
 			var type = e.layerType,
-			layer = e.layer;
+				layer = e.layer;
 			if (type === 'marker') {
 				console.log($scope.markerMsg);
 
@@ -150,7 +158,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, lea
 				layer.bindLabel((totalDistance / 1000).toFixed(3) + 'km');
 			}
 
-			
+
 
 			$scope.newMarker = e.layer.toGeoJSON();
 			$scope.newMarker.properties = $scope.marker;
