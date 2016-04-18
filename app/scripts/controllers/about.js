@@ -3,6 +3,7 @@
 var mapModule = angular.module('baladeMapApp');
 
 mapModule.controller('AboutCtrl', ["$scope", "leafletData", function($scope, leafletData) {
+	var socket = io.connect('http://localhost:3000');
 	angular.extend($scope, {
 		center: {
 			lat: 46.833056,

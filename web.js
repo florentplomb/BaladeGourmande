@@ -3,6 +3,11 @@ var express = require('express');
 
 var app = express();
 
+var server = app.listen(process.env.PORT || 3000);
+var io = require('socket.io').listen(server);
+
 app.use(express.static(__dirname + '/app'));
-app.listen(process.env.PORT || 3000);
 console.log("Listening on")
+io.sockets.on('connection', function (socket) {
+    console.log('Un client est connecté !');
+});
