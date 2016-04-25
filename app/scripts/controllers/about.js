@@ -7,10 +7,8 @@ var mapModule = angular.module('baladeMapApp');
 
 mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($scope, leafletData, $http) {
 
-	$http.get("/api").success(function(data) {
-		
-		var socket = io.connect('http://mapbaladegourmande.herokuapp.com/');
-	});
+
+	var socket = io.connect('http://localhost:3000');
 
 	angular.extend($scope, {
 		center: {
@@ -72,7 +70,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 
 
 		$scope.$watch('radioMarkersChoice', function() {
-			console.log($scope.radioMarkersChoice)
+			//console.log($scope.radioMarkersChoice)
 		}, true);
 
 
