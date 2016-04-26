@@ -33,7 +33,7 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   Thing.create(req.body, function(err, thing) {
     if(err) { return handleError(res, err); }
-    return  res.status(201).json(thing);
+    return res.json(201, thing);
   });
 };
 

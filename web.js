@@ -18,12 +18,13 @@ db.on('error', function() {
 var app = express();
 
 //require('./config/express')(app);
-require('./config/routes')(app);
+//require('./config/routes')(app);
 
 
 var port = process.env.PORT || 3000;
 var server = app.listen(port);
 var io = require('socket.io').listen(server);
+var routeSocket = require('./api/sockets')(io);
 
 app.use(express.static(__dirname + '/app'));
 console.log("Listening on " + port)
@@ -33,6 +34,7 @@ io.sockets.on('connection', function(socket) {
 
 
 // Expose app
-exports = module.exports = app;
+ exports = module.exports = app;
+// exports = module.exports = io;
 
 

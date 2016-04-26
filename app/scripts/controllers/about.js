@@ -7,8 +7,15 @@ var mapModule = angular.module('baladeMapApp');
 
 mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($scope, leafletData, $http) {
 
-
+	var cpt = 0;
 	var socket = io.connect('http://localhost:3000');
+	socket.on('message', function(message) {
+		alert('Le serveur a un message pour vous : ' + message);
+	})
+
+	
+
+	var drawnItems = new L.FeatureGroup();
 
 	angular.extend($scope, {
 		center: {
@@ -16,6 +23,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 			lng: 6.65,
 			zoom: 13
 		},
+
 		layers: {
 			baselayers: {
 				osm: {
@@ -45,7 +53,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 
 	leafletData.getMap().then(function(map) {
 
-
+		// var drawnItems = $scope.controls.edit.featureGroup;
 
 		L.AwesomeMarkers.Icon.prototype.options.prefix = 'ion';
 		var featureGroup = L.featureGroup().addTo(map);
@@ -115,12 +123,15 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 		map.on('draw:edited', drawEdited);
 
 		function drawCreated(e) {
+
 			var type = e.layerType,
 			layer = e.layer;
-			if (type === 'marker') {
-				console.log($scope.markerMsg);
+			
+			
 
-				layer.setIcon(L.AwesomeMarkers.icon($scope.radioMarkersChoice));
+			if (type === 'marker') {
+			//	console.log($scope.markerMsg);
+			layer.setIcon(L.AwesomeMarkers.icon($scope.radioMarkersChoice));
 				// layer.setIcon(L.icon({
 				// 	// iconUrl: 'images/yeoman.png',
 				// 	// iconRetinaUrl: 'my-icon@2x.png',
@@ -156,28 +167,35 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 				layer.bindLabel((totalDistance / 1000).toFixed(3) + 'km');
 			}
 
-
-
 			$scope.newMarker = e.layer.toGeoJSON();
 			$scope.newMarker.properties = $scope.marker;
 			angular.extend($scope.newMarker.properties, $scope.radioMarkersChoice);
-
-			console.log(JSON.stringify($scope.newMarker));
+			//console.log(JSON.stringify($scope.newMarker));
 			// featureGroup.clearLayers();
-
 			featureGroup.addLayer(e.layer);
+
+			console.log(layer._leaflet_id)
 			// e.layer.bindPopup(' km<sup>2</sup>');
 			// e.layer.openPopup();
+
+			console.log(JSON.stringify(featureGroup.toGeoJSON()));
 
 		}
 
 
 		function drawEdited(e) {
-			e.layers.eachLayer(function(layer) {
-				showPolygonArea({
-					layer: layer
-				});
-			});
+			var layers = e.layers;
+			layers.eachLayer(function(layer) {
+
+				console.log(layer._leaflet_id)
+
+				// for (var i = 0; i < $scope.savedItems.length; i++) {
+				// 	// if ($scope.savedItems[i].id == layer._leaflet_id) {
+				// 	// 	$scope.savedItems[i].geoJSON = layer.toGeoJSON();
+				// 	// }
+				// }
+			});	
+			
 		}
 
 
