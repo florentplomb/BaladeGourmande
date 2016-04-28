@@ -13,11 +13,10 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 		alert('Le serveur a un message pour vous : ' + message);
 	})
 
-	
-
 	var drawnItems = new L.FeatureGroup();
 
 	angular.extend($scope, {
+		savedItems:[],
 		center: {
 			lat: 46.833056,
 			lng: 6.65,
@@ -52,8 +51,6 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 	});
 
 	leafletData.getMap().then(function(map) {
-
-		// var drawnItems = $scope.controls.edit.featureGroup;
 
 		L.AwesomeMarkers.Icon.prototype.options.prefix = 'ion';
 		var featureGroup = L.featureGroup().addTo(map);
@@ -110,7 +107,6 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 
 			$scope.radioMarkersChoice = $scope.markersStyle.wine;
 			$scope.marker = {};
-
 			var type = e.layerType,
 			layer = e.layer;
 			if (type === 'marker') {
@@ -118,20 +114,20 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 			}
 		});
 
-
 		map.on('draw:created', drawCreated);
 		map.on('draw:edited', drawEdited);
+		map.on('draw:deleted', drawDeleted);
 
 		function drawCreated(e) {
 
 			var type = e.layerType,
 			layer = e.layer;
-			
-			
+
+			$scope.newMarker = e.layer.toGeoJSON();
 
 			if (type === 'marker') {
-			//	console.log($scope.markerMsg);
-			layer.setIcon(L.AwesomeMarkers.icon($scope.radioMarkersChoice));
+				//	console.log($scope.markerMsg);
+				layer.setIcon(L.AwesomeMarkers.icon($scope.radioMarkersChoice));
 				// layer.setIcon(L.icon({
 				// 	// iconUrl: 'images/yeoman.png',
 				// 	// iconRetinaUrl: 'my-icon@2x.png',
@@ -144,6 +140,9 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 				// 	// shadowAnchor: [22, 94]
 				// }));
 				layer.bindPopup("<strong>" + $scope.marker.title + "</strong><dl><dd>" + $scope.marker.message + "<dd></dl>");
+
+				$scope.newMarker.properties = $scope.marker;
+				angular.extend($scope.newMarker.properties, $scope.radioMarkersChoice)
 			}
 
 			if (type === 'polyline') {
@@ -155,30 +154,24 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 						tempLatLng = latlng;
 						return;
 					}
-
 					totalDistance += tempLatLng.distanceTo(latlng);
 					tempLatLng = latlng;
-
-					console.log(totalDistance);
 				});
 
 				$scope.lineDistance = totalDistance;
-
 				layer.bindLabel((totalDistance / 1000).toFixed(3) + 'km');
+				$scope.newMarker.properties.distance = (totalDistance / 1000).toFixed(3)
 			}
-
-			$scope.newMarker = e.layer.toGeoJSON();
-			$scope.newMarker.properties = $scope.marker;
-			angular.extend($scope.newMarker.properties, $scope.radioMarkersChoice);
-			//console.log(JSON.stringify($scope.newMarker));
-			// featureGroup.clearLayers();
 			featureGroup.addLayer(e.layer);
+			$scope.newMarker.properties.id = layer._leaflet_id;
+			
+			$scope.savedItems.push($scope.newMarker);
+			console.log($scope.savedItems);
 
-			console.log(layer._leaflet_id)
-			// e.layer.bindPopup(' km<sup>2</sup>');
-			// e.layer.openPopup();
+			//	console.log($scope.savedItems)
+			//featureGroup.clearLayers(); // Ca empeche de modifier le groupe de item créée
 
-			console.log(JSON.stringify(featureGroup.toGeoJSON()));
+			//console.log(JSON.stringify($scope.newMarker)); 
 
 		}
 
@@ -186,26 +179,32 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 		function drawEdited(e) {
 			var layers = e.layers;
 			layers.eachLayer(function(layer) {
-
-				console.log(layer._leaflet_id)
-
-				// for (var i = 0; i < $scope.savedItems.length; i++) {
-				// 	// if ($scope.savedItems[i].id == layer._leaflet_id) {
-				// 	// 	$scope.savedItems[i].geoJSON = layer.toGeoJSON();
-				// 	// }
-				// }
+				angular.forEach($scope.savedItems, function(value, key) {
+					if (value.properties.id == layer._leaflet_id){
+						value.geometry = layer.toGeoJSON().geometry;
+					}
+				})
 			});	
-			
-		}
+			console.log($scope.savedItems);
+		};
 
-
+		function drawDeleted(e) {
+			var layers = e.layers;
+			layers.eachLayer(function(layer) {
+				angular.forEach($scope.savedItems, function(value, key) {
+					if (value.properties.id == layer._leaflet_id){
+						$scope.savedItems.splice(key, 1);
+					}
+				})
+			});	
+			console.log($scope.savedItems);
+		};
 
 		leafletData.getLayers().then(function(baselayers) {
 			var drawnItems = baselayers.overlays.draw;
 			map.on('draw:created', function(e) {
 				var layer = e.layer;
 				drawnItems.addLayer(layer);
-				console.log(JSON.stringify(layer.toGeoJSON()));
 			});
 		});
 	});
