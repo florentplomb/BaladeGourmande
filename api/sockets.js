@@ -2,20 +2,33 @@
  * Main application routes
  */
 
- 'use strict';
+'use strict';
 
 
- var _ = require('lodash');
+var _ = require('lodash');
 
- var Thing = require('./thing/thing.model');
+var Item = require('./item/item.model');
+var Thing = require('./thing/thing.model');
 
- module.exports = function(io) {
+module.exports = function connection(io) {
+	io.sockets.on('connection', function(socket) {
+		//****** TEST **********//
 
- 	Thing.find(function (err, things) {
- 		io.sockets.on('connection', function (socket) {
- 			socket.emit('message', things);
- 		});
- 	});
- }
+		// Thing.find(function(err, things) {
+		// 	socket.emit('message', things);
+		// });
 
+		//****** ItemController **********//
 
+		socket.on('itemsToSave', function(itemsToSave) {
+			Item.create(itemsToSave, function(err, itemSaved) {
+				if (err) {
+					console.log("Erorr to save item");
+				}
+				console.log(itemSaved);
+			});
+		});
+
+	});
+
+}

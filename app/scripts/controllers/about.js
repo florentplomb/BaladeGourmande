@@ -167,6 +167,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 			
 			$scope.savedItems.push($scope.newMarker);
 			console.log($scope.savedItems);
+			socket.emit('itemsToSave', $scope.savedItems);
 
 			//	console.log($scope.savedItems)
 			//featureGroup.clearLayers(); // Ca empeche de modifier le groupe de item créée
@@ -185,7 +186,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 					}
 				})
 			});	
-			console.log($scope.savedItems);
+			socket.emit('itemsToSave', $scope.savedItems);
 		};
 
 		function drawDeleted(e) {
@@ -198,6 +199,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 				})
 			});	
 			console.log($scope.savedItems);
+			socket.emit('itemsToSave', $scope.savedItems);
 		};
 
 		leafletData.getLayers().then(function(baselayers) {
