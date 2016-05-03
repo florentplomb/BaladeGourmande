@@ -7,6 +7,7 @@ var mapModule = angular.module('baladeMapApp');
 
 mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($scope, leafletData, $http) {
 
+	var userId = "57283e06b065849c28b03ea8";
 	var cpt = 0;
 	var socket = io.connect('http://localhost:3000');
 	socket.on('message', function(message) {
