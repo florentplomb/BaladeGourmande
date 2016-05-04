@@ -5,7 +5,9 @@ var mongoose = require('mongoose'),
 
 var myMapSchema = new Schema({
 	name: { type: String, required: true, index: { unique: true } },
-	save: [{ type : ObjectId, ref: 'SaveMap' }]
+	saveMap:  [{ type :  Schema.Types.ObjectId, ref: 'SaveMap' }],
+	user: { type :  Schema.Types.ObjectId, ref: 'User' }
+
 });
 
-module.exports = mongoose.model('myMap', MapSchema);
+module.exports = mongoose.model('myMap', myMapSchema);

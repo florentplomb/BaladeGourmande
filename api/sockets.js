@@ -9,7 +9,8 @@
 
  var Item = require('./item/item.model');
  var User = require('./user/user.model');
- var myMap = require('./myMap/myMap.model');
+ var MyMap = require('./myMap/myMap.model');
+ var SaveMap = require('./saveMap/saveMap.model');
 
  var Thing = require('./thing/thing.model');
 
@@ -29,32 +30,97 @@
 
 			User.findById(idAdri)
 			.populate('mymap')
-				  .exec(function (err, user) { // passer l'id quand on sauve un item. 
-				  	if (err) return handleError(err);
-				  	if (!user) return handleError(err);
+				.exec(function(err, user) { // passer l'id quand on sauve un item. 
+					if (err) return handleError(err);
+					if (!user) return handleError(err);
+					MyMap.find({
+						'name': 'BaladeGroumande',
+						'user': idAdri
+					}, function(err, myMap) {
+						if (err) return handleError(err);
+						console.log(myMap);
+						//if (myMap.length == 0) return handleError(err);
+						if (myMap.length == 0) {
+							console.log("la map existe PAS");
+							MyMap.create({
+								name: "BaladeGroumande"
+							}, function(err, myMapSaved) {
+								if (err) {
+									console.log("Erorr to save map");
+								}
+								//console.log(myMapSaved);
+								Item.create(itemsToSave, function(err, itemSaved) {
+									if (err) {
+										console.log("Erorr to save item");
+									}
+									console.log(itemSaved);
+									var idItems = [] ;
+									itemSaved.forEach(function(item) { 
+										idItems.push(item._id)
+									})
 
-				  	myMap.findOne({ 'name': 'BaladeGroumande' , _id :idAdri }, function (err, map) {
-				  		if (err) return handleError(err);
-				  		if (!map) {
-				  			Map.create({name:"BaladeGroumande"}, function(err, mapSaved) {
-				  				if (err) {
-				  					console.log("Erorr to save item");
-				  				}
-				  				console.log(mapSaved);
-				  			})
-				  		}
+									var savemap = new SaveMap();
+									savemap.items = idItems;
+									savemap.save(function(err, saveMapSaved) {
+										if (err) return handleError(err);
 
-				  	})
+									//console.log("saveMapSaved");
+									myMapSaved.saveMap.push(saveMapSaved._id)
+									myMapSaved.user = user._id
+									myMapSaved.save(function(err,mapupdated){
+										if (err) return handleError(err);
+										console.log("mapUdpated");
+										user.myMaps.push(myMapSaved._id)
+										user.save(function(err,muserupdated){
+											if (err) return handleError(err);
+											console.log("userUpdated");
 
-				  })	
+										})
 
-				  Item.create(itemsToSave, function(err, itemSaved) {
-				  	if (err) {
-				  		console.log("Erorr to save item");
-				  	}
-				  	console.log(itemSaved);
-				  });
-				});
+									})
+								})
+
+								});
+
+							})
+						}else{
+							console.log("la map existe");
+							Item.create(itemsToSave, function(err, itemSaved) {
+								if (err) {
+									console.log("Erorr to save item");
+								}
+							//	console.log(itemSaved);
+							var idItems = [] ;
+							itemSaved.forEach(function(item) { 
+								idItems.push(item._id)
+							})
+
+							var savemap = new SaveMap();
+							savemap.items = idItems;
+							savemap.save(function(err, saveMapSaved) {
+								if (err) return handleError(err);
+
+									console.log(myMap);
+									myMap[0].saveMap.push(saveMapSaved._id)
+									myMap[0].save(function(err,mapupdated){
+										if (err) return handleError(err);
+										console.log("mapupdated");
+									})
+
+								})
+
+						});
+
+						}
+
+
+
+					})
+
+				})
+
+
+			});
 
 	});
 
