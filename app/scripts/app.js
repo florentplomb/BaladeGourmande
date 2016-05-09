@@ -8,18 +8,26 @@
  *
  * Main module of the application.
  */
-angular
-  .module('baladeMapApp', [
-    'ngRoute',
-    'leaflet-directive'
+ angular
+ .module('baladeMapApp', [
+  'ngRoute',
+  'leaflet-directive'
   ])
-  .config(function($routeProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
+ .config(function($routeProvider) {
+  $routeProvider
+  .when('/map', {
+    templateUrl: 'views/balademap.html',
+    controller: 'BaladeMapCtrl'
+  })
+  .when('/adrien', {
+    templateUrl: 'views/adrien.html',
+    controller: 'AdrienCtrl'
+  })
+  .when('/editor', {
+    templateUrl: 'views/editor.html',
+    controller: 'EditorCtrl'
+  })
+  .otherwise({
+    redirectTo: '/map' // faire un page d'aacceuile et renvoyer.
   });
+});

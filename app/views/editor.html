@@ -1,0 +1,64 @@
+
+<div id="map">
+	<leaflet lf-center="center" layers="layers" width="100%" height="100%"></leaflet>
+</div>
+
+<div id="info"  class="infoStyle">
+		<h1> Balade Gourmande de Grandson et sa région </h1>
+
+
+	</div>
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal" ng-show="showNewMarker">
+
+	<!-- Modal content -->
+	<div class="modal-content">
+		<form>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Titre </label>
+				<input type="text" class="form-control" ng-model="marker.title" maxlength="15">
+				<label for="exampleInputEmail1">Description du stand (max 150 char.)</label>
+				<textarea class="form-control" ng-model="marker.message" maxlength="150" rows="3"></textarea>
+			</div>
+			
+
+
+			<div id="cat">
+				<div class="markersList">
+					<div class="awesome-marker-icon-red awesome-marker markerPosition"><i class=" ion ion-wineglass  icon-white"></i></div>
+					<label><input type="radio" ng-model="radioMarkersChoice" ng-value="markersStyle.wine"></label>
+				</div>
+				<div class="markersList">
+					<div class="awesome-marker-icon-darkblue awesome-marker markerPosition"><i class=" ion ion-model-s icon-white"></i></div>
+					<label><input type="radio" ng-model="radioMarkersChoice" ng-value="markersStyle.parking"></label>
+				</div>
+				<div class="markersList">
+					<div class="awesome-marker-icon-green awesome-marker markerPosition"><i class=" ion ion-flag  icon-white"></i></div>
+					<label><input type="radio" ng-model="radioMarkersChoice" ng-value="markersStyle.start"></label>
+				</div>
+				<div class="markersList">
+					<div class="awesome-marker-icon-orange awesome-marker markerPosition"><i class=" ion ion-flag  icon-white"></i></div>
+					<label><input type="radio" ng-model="radioMarkersChoice" ng-value="markersStyle.finish"></label>
+				</div>
+
+
+			</div>
+
+			<!-- 	<div class="checkbox">
+					<div id="markerWine" class="awesome-marker-icon-red awesome-marker" tabindex="0" style="width: 35px; height: 45px;  z-index: 88;"><i class=" ion ion-wineglass  icon-white"></i></div>
+					<label>
+						<input type="checkbox"> Check me out
+					</label>
+				</div> -->
+				<button type="submit" class="btn btn-default" ng-click="showNewMarker=false;">Submit</button>
+			</form>
+		</div>
+
+	</div>
+
+	
+
+
+

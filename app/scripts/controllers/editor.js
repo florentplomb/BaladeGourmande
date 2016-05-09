@@ -5,7 +5,7 @@
 var mapModule = angular.module('baladeMapApp');
 
 
-mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($scope, leafletData, $http) {
+mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($scope, leafletData, $http) {
 
 	var userId = "57283e06b065849c28b03ea8";
 	var cpt = 0;
@@ -125,7 +125,7 @@ mapModule.controller('AboutCtrl', ["$scope", "leafletData","$http", function($sc
 			layer = e.layer;
 
 			$scope.newMarker = e.layer.toGeoJSON();
-
+			$scope.marker.message = " "
 			if (type === 'marker') {
 				//	console.log($scope.markerMsg);
 				layer.setIcon(L.AwesomeMarkers.icon($scope.radioMarkersChoice));
