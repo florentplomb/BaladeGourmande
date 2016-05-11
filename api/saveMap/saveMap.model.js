@@ -12,4 +12,7 @@ var SaveMapSchema = new Schema({
 		}
 });
 
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
+SaveMapSchema.plugin(deepPopulate);
+
 module.exports = mongoose.model('SaveMap', SaveMapSchema);

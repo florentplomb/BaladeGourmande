@@ -10,7 +10,11 @@ mapModule.controller('BaladeMapCtrl', ["$scope", "leafletData","$http", function
 	var userId = "57283e06b065849c28b03ea8";
 	var cpt = 0;
 	var socket = io.connect('http://localhost:3000');
-	socket.on('message', function(message) {
+	socket.emit('get user map' , userId, "BaladeGroumande")
+	socket.on('map',function(items){
+
+	})
+	socket.on('getItems', function(message) {
 		alert('Le serveur a un message pour vous : ' + message);
 	})
 
@@ -56,30 +60,6 @@ mapModule.controller('BaladeMapCtrl', ["$scope", "leafletData","$http", function
 		L.AwesomeMarkers.Icon.prototype.options.prefix = 'ion';
 		var featureGroup = L.featureGroup().addTo(map);
 
-		var drawControl = new L.Control.Draw({
-			edit: {
-				featureGroup: featureGroup
-			},
-			draw: {
-				polygon: false,
-				polyline: {
-					shapeOptions: {
-						color: '#d907ea',
-						opacity: 0.7
-					}
-				},
-				rectangle: false,
-				circle: false,
-				marker: true
-			}
-		}).addTo(map);
-
-
-		$scope.$watch('radioMarkersChoice', function() {
-			//console.log($scope.radioMarkersChoice)
-		}, true);
-
-
 		$scope.markersStyle = {
 			wine: {
 				icon: 'ion-wineglass',
@@ -101,7 +81,6 @@ mapModule.controller('BaladeMapCtrl', ["$scope", "leafletData","$http", function
 			}
 
 		}
-
 
 
 		map.on('draw:drawstart', function(e) {

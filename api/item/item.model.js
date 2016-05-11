@@ -14,4 +14,6 @@ var ItemSchema = new Schema({
 	geometry: Schema.Types.Mixed
 });
 
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
+ItemSchema.plugin(deepPopulate);
 module.exports = mongoose.model('Item', ItemSchema);
