@@ -1,0 +1,15 @@
+
+
+html,body {
+  height: 100%;
+}
+
+#fullScreen {
+  height: 100%;
+}
+
+#map{
+  height: 100%;
+  width: 80%;
+}
+

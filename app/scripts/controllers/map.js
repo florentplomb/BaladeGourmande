@@ -2,18 +2,16 @@
 
 
 
-var mapModule = angular.module('baladeMapApp');
+var mapModule = angular.module('mapEditor');
 
 
-mapModule.controller('BaladeMapCtrl', ["$scope", "leafletData","$http", function($scope, leafletData, $http) {
+mapModule.controller('MapCtrl', ["$scope", "leafletData","$http", function($scope, leafletData, $http,$timeout) {
 
 	var userId = "57283e06b065849c28b03ea8";
 	var cpt = 0;
 	var socket = io.connect('http://localhost:3000');
 	socket.emit('get user map' , userId, "BaladeGroumande")
-	socket.on('map',function(items){
-
-	})
+	
 	socket.on('getItems', function(message) {
 		alert('Le serveur a un message pour vous : ' + message);
 	})
@@ -37,7 +35,7 @@ mapModule.controller('BaladeMapCtrl', ["$scope", "leafletData","$http", function
 				},
 
 				other: {
-					name: 'foret',
+					name: 'Forêt',
 					url: 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png',
 					type: 'xyz'
 				}
@@ -55,8 +53,12 @@ mapModule.controller('BaladeMapCtrl', ["$scope", "leafletData","$http", function
 		}
 	});
 
-	leafletData.getMap().then(function(map) {
 
+
+
+	leafletData.getMap().then(function(map) {
+		
+		map.invalidateSize();
 		L.AwesomeMarkers.Icon.prototype.options.prefix = 'ion';
 		var featureGroup = L.featureGroup().addTo(map);
 
@@ -82,6 +84,46 @@ mapModule.controller('BaladeMapCtrl', ["$scope", "leafletData","$http", function
 
 		}
 
+		socket.on('map',function(userMap){
+
+			console.log(userMap.saveMap);
+
+			var geojson = userMap.saveMap[0].items;
+			
+			var geojsonLayer = L.geoJson(geojson, {
+
+					// pointToLayer: function(feature, latlng) {
+					// 	return new L.CircleMarker(latlng, {radius: 10, fillOpacity: 0.85});
+					// },
+					onEachFeature: function (feature, layer) {
+						if(feature.geometry.type == "Point"){
+							var popupContent =  '<strong>' + feature.properties.title + '</strong><dl><dd>' + feature.properties.message + '<dd></dl>'
+							layer.bindPopup(popupContent);
+							var markerStyle = {
+								icon: feature.properties.icon,
+								markerColor: feature.properties.markerColor};
+
+								layer.setIcon(L.AwesomeMarkers.icon(markerStyle));
+							}
+
+							if(feature.geometry.type == "LineString"){
+								layer.setStyle({
+									"color": "#e049e3", //#e049e3 #ff7800
+									"weight": 3.5,
+									"opacity": 0.8
+								});
+
+								layer.bindLabel(feature.properties.distance +'km');
+							}
+						}
+
+
+					});
+
+			map.addLayer(geojsonLayer);
+			
+		})
+
 
 		map.on('draw:drawstart', function(e) {
 
@@ -95,8 +137,7 @@ mapModule.controller('BaladeMapCtrl', ["$scope", "leafletData","$http", function
 		});
 
 		map.on('draw:created', drawCreated);
-		map.on('draw:edited', drawEdited);
-		map.on('draw:deleted', drawDeleted);
+		
 
 		function drawCreated(e) {
 

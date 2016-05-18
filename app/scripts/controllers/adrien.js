@@ -2,7 +2,7 @@
 
 
 
-var mapModule = angular.module('baladeMapApp');
+var mapModule = angular.module('mapEditor');
 
 
 mapModule.controller('AdrienCtrl', ["$scope", "leafletData","$http", function($scope, leafletData, $http) {

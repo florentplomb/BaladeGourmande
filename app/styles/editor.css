@@ -1,48 +1,12 @@
 
-
-html,body {
-  height: 100%;
-}
-
-#fullScreen {
-  height: 100%;
-}
-
-#map{
-  height: 100%;
-  width: 80%;
-}
-
-
-
-
-
-
-/*#info{
-  position: absolute;
-  top: 0%;
-  right: 0%;
-  width: 20%;
-  height: 100%
-  background: #ffffff;
-  border: solid 1px;
-  padding: 0.5em;
-  background-color: #fff;
-  background-image: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-  color: #555;
-  font-size: 14px;
-  }*/
-  #info h1 { color: #7c795d; font-family: 'Trocchi', serif; font-size: 45px; font-weight: normal; line-height: 48px; margin: 0; } 
-  #info h2 { color: #7c795d; font-family: 'Source Sans Pro', sans-serif; font-size: 28px; font-weight: 400; line-height: 32px; margin: 0 0 24px; }
+#info h1 { color: #7c795d; font-family: 'Trocchi', serif; font-size: 45px; font-weight: normal; line-height: 48px; margin: 0; } 
+#info h2 { color: #7c795d; font-family: 'Source Sans Pro', sans-serif; font-size: 28px; font-weight: 400; line-height: 32px; margin: 0 0 24px; }
 
 
 #info .subheader { font-size: 26px; font-weight: 300; color: #ffcc66; margin: 0 0 24px; }
 
 
- #info p { color: #4c4a37; font-family: 'Source Sans Pro', sans-serif; font-size: 18px; line-height: 32px; margin: 0 0 24px; }
+#info p { color: #4c4a37; font-family: 'Source Sans Pro', sans-serif; font-size: 18px; line-height: 32px; margin: 0 0 24px; }
 
 
 #info a { color: #ff9900; background: #fff4a3; text-decoration: none; }

@@ -1,8 +1,6 @@
 'use strict';
 
-
-
-var mapModule = angular.module('baladeMapApp');
+var mapModule = angular.module('mapEditor');
 
 
 mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($scope, leafletData, $http) {
@@ -10,9 +8,7 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 	var userId = "57283e06b065849c28b03ea8";
 	var cpt = 0;
 	var socket = io.connect('http://localhost:3000');
-	socket.on('message', function(message) {
-		alert('Le serveur a un message pour vous : ' + message);
-	})
+	socket.emit('get user map' , userId, "BaladeGroumande")
 
 	var drawnItems = new L.FeatureGroup();
 
@@ -33,7 +29,7 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 				},
 
 				other: {
-					name: 'foret',
+					name: 'Forêt',
 					url: 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png',
 					type: 'xyz'
 				}
@@ -53,8 +49,58 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 
 	leafletData.getMap().then(function(map) {
 
+
 		L.AwesomeMarkers.Icon.prototype.options.prefix = 'ion';
 		var featureGroup = L.featureGroup().addTo(map);
+
+
+		socket.on('map',function(userMap){
+
+			//console.log(userMap.saveMap);
+
+			var geojson = userMap.saveMap[0].items;
+			
+			var geojsonLayer = L.geoJson(geojson, {
+
+					// pointToLayer: function(feature, latlng) {
+					// 	return new L.CircleMarker(latlng, {radius: 10, fillOpacity: 0.85});
+					// },
+					onEachFeature: function (feature, layer) {
+						if(feature.geometry.type == "Point"){
+							var popupContent =  '<strong>' + feature.properties.title + '</strong><dl><dd>' + feature.properties.message + '<dd></dl>'
+							layer.bindPopup(popupContent);
+							var markerStyle = {
+								icon: feature.properties.icon,
+								markerColor: feature.properties.markerColor};
+
+								layer.setIcon(L.AwesomeMarkers.icon(markerStyle));
+							}
+
+							if(feature.geometry.type == "LineString"){
+								layer.setStyle({
+									"color": "#e049e3", //#e049e3 #ff7800
+									"weight": 3.5,
+									"opacity": 0.8
+								});
+
+								layer.bindLabel(feature.properties.distance + 'km');
+							}
+
+							featureGroup.addLayer(layer);
+
+							var m = layer.toGeoJSON();
+							delete m._id;
+							delete m.__v;
+							m.properties.id = layer._leaflet_id;
+							console.log(m);
+							$scope.savedItems.push(m);
+
+						}
+					});
+			
+			map.addLayer(geojsonLayer);
+			
+		})
 
 		var drawControl = new L.Control.Draw({
 			edit: {
@@ -125,7 +171,7 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 			layer = e.layer;
 
 			$scope.newMarker = e.layer.toGeoJSON();
-			$scope.marker.message = " "
+
 			if (type === 'marker') {
 				//	console.log($scope.markerMsg);
 				layer.setIcon(L.AwesomeMarkers.icon($scope.radioMarkersChoice));
@@ -179,11 +225,28 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 
 
 		function drawEdited(e) {
-			var layers = e.layers;
+						var layers = e.layers;
 			layers.eachLayer(function(layer) {
 				angular.forEach($scope.savedItems, function(value, key) {
 					if (value.properties.id == layer._leaflet_id){
 						value.geometry = layer.toGeoJSON().geometry;
+						
+						if(value.geometry.type == "LineString"){
+							console.log("oui");
+							var tempLatLng = null;
+							var totalDistance = 0.00000;
+							$.each(layer._latlngs, function(i, latlng) {
+								if (tempLatLng == null) {
+									tempLatLng = latlng;
+									return;
+								}
+								totalDistance += tempLatLng.distanceTo(latlng);
+								tempLatLng = latlng;
+							});
+							$scope.lineDistance = totalDistance;
+							layer.bindLabel((totalDistance / 1000).toFixed(3) + 'km');
+							value.properties.distance = (totalDistance / 1000).toFixed(3);
+						}
 					}
 				})
 			});	

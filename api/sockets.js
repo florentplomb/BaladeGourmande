@@ -2,35 +2,38 @@
  * Main application routes
  */
 
-'use strict';
+ 'use strict';
 
 
-var _ = require('lodash');
+ var _ = require('lodash');
 
-var Item = require('./item/item.model');
-var User = require('./user/user.model');
-var MyMap = require('./myMap/myMap.model');
-var SaveMap = require('./saveMap/saveMap.model');
-var deepPopulate = require('mongoose-deep-populate');
-var Thing = require('./thing/thing.model');
+ var Item = require('./item/item.model');
+ var User = require('./user/user.model');
+ var MyMap = require('./myMap/myMap.model');
+ var SaveMap = require('./saveMap/saveMap.model');
+ var deepPopulate = require('mongoose-deep-populate');
+ var Thing = require('./thing/thing.model');
 
-module.exports = function connection(io) {
-	io.sockets.on('connection', function(socket) {
+ module.exports = function connection(io) {
+ 	io.sockets.on('connection', function(socket) {
 
 
-		socket.on('get user map', function(userId, mapName) {
-				MyMap.findOne({
-						'name': mapName,
-						'user': userId
-					})
-					.deepPopulate('saveMap.items')
-					.exec(function(err, myMap) {
-						if (err) return handleError(err);
-						console.log(myMap);
+ 		socket.on('get user map', function(userId, mapName) {
+ 			MyMap.findOne({
+ 				'name': mapName,
+ 				'user': userId
+ 			})
+ 			.deepPopulate('saveMap.items user -password')
+ 			.exec(function(err, myMap) {
+ 				if (err) return handleError(err);
+ 				if (myMap.saveMap.length > 0) {
+ 					socket.emit('map', myMap);
+ 				}								
+ 				console.log(myMap);
 
-					})
+ 			})
 
-			})
+ 		})
 			//****** TEST **********//
 			//.deepPopulate('saveMap.items','','',{sort: {'createdOn' : -1 } ,limit: 1})
 			// Thing.find(function(err, things) {
@@ -44,7 +47,7 @@ module.exports = function connection(io) {
 			var idAdri = "57283e06b065849c28b03ea8";
 
 			User.findById(idAdri)
-				.populate('mymap')
+			.populate('mymap')
 				.exec(function(err, user) { // passer l'id quand on sauve un item. 
 					if (err) return handleError(err);
 					if (!user) return handleError(err);
@@ -99,7 +102,9 @@ module.exports = function connection(io) {
 
 							})
 						} else {
-							console.log("la map existe");
+							console.log(itemsToSave);
+
+
 							Item.create(itemsToSave, function(err, itemSaved) {
 								if (err) {
 									console.log("Erorr to save item");
@@ -135,8 +140,8 @@ module.exports = function connection(io) {
 				})
 
 
-		});
+			});
 
 	});
 
-}
+ }

@@ -1,49 +1,17 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" ng-app="mapEditor" >
 <head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/leaflet-dist/leaflet.css" />
-    <link rel="stylesheet" href="bower_components/leaflet-draw/dist/leaflet.draw.css" />
-    <link rel="stylesheet" href="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css"> 
-    <link rel="stylesheet" href="bower_components/Leaflet.label/dist/leaflet.label.css" />
-     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
-   
-
-    <!-- endbuild -->
-</head>
-<body ng-app="baladeMapApp">
-    <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-      <![endif]-->
-
-      <!-- Add your site or application content here -->
-
-      <div id="fullScreen" ng-view=""></div>
-
-    <!--[if lt IE 9]>
-    <script src="../bower_components/es5-shim/es5-shim.js"></script>
-    <script src="../bower_components/json3/lib/json3.min.js"></script>
-    <![endif]-->
-
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="/bower_components/socket.io-client/socket.io.js"></script>
+    <meta meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+ 
+    <script src="bower_components/socket.io-client/socket.io.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/angular-ui-router-styles/ui-router-styles.js"></script>
     <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
     <script src="bower_components/leaflet/dist/leaflet-src.js"></script>
     <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
@@ -53,19 +21,26 @@
     <script src="bower_components/leaflet-dist/leaflet.js"></script>
     <script src="bower_components/leaflet-draw/dist/leaflet.draw-src.js"></script>
     <script src="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/editor.js"></script>
-    <script src="scripts/controllers/balademap.js"></script>
-    <script src="scripts/controllers/adrien.js"></script>
     <script src="bower_components/Leaflet.label/dist/leaflet.label.js"></script>
+    <script src="bower_components/angular-css/angular-css.min.js"></script>
+
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/map.js"></script>
+    <script src="scripts/controllers/editor.js"></script>
+    <script src="scripts/controllers/adrien.js"></script>
+
+    <link rel="stylesheet" href="styles/initMap.css" />
+    <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="bower_components/Leaflet.label/dist/leaflet.label.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/leaflet-draw/dist/leaflet.draw.css" />
+    <link rel="stylesheet" href="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css" />
     
-    
-    
-    <!-- endbuild -->
+</head>
+<body ui-router-styles>
+
+    <div id="fullScreen"ui-view></div>
 </body>
 </html>

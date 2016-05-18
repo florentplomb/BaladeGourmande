@@ -28,7 +28,7 @@ myMapSchema.plugin(deepPopulate, {
 		'saveMap': {
 			options: {
 				sort: {'createdOn' : -1 },
-				limit: 5
+				limit: 10
 
 			}
 		}

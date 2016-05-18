@@ -8,8 +8,10 @@ var ItemSchema = new Schema({
 	properties: {
 		user: String,
 		icon: String,
-		markerColor: String
-
+		markerColor: String,
+		title:String,
+		message:String,
+		distance: Number,
 	},
 	geometry: Schema.Types.Mixed
 });
