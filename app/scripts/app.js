@@ -37,39 +37,39 @@
     data: {
       css: 'styles/map.css'
     }
-  })
-  .state('adrienMap', {
-    url:'/adrienMap',
-    templateUrl: 'views/adrienMap.html',
-    controller: 'AdrienMapCtrl',
-    data: {
-      css: 'styles/map.css'
-    }
-  })
-  .state('adrienEditor', {
-    url:'/adrienEditor',
-    templateUrl: 'views/adrienEditor.html',
-    controller: 'AdrienEditorCtrl',
-    data: {
-      css: 'styles/editor.css'
-    }
-  })
-    .state('romainMap', {
-    url:'/romainMap',
-    templateUrl: 'views/romainMap.html',
-    controller: 'RomainMapCtrl',
-    data: {
-      css: 'styles/map.css'
-    }
-  })
-  .state('romainEditor', {
-    url:'/romainEditor',
-    templateUrl: 'views/romainEditor.html',
-    controller: 'RomainEditorCtrl',
-    data: {
-      css: 'styles/editor.css'
-    }
-  })
+   })
+  // .state('adrienMap', {
+  //   url:'/adrienMap',
+  //   templateUrl: 'views/adrienMap.html',
+  //   controller: 'AdrienMapCtrl',
+  //   data: {
+  //     css: 'styles/map.css'
+  //   }
+  // })
+  // .state('adrienEditor', {
+  //   url:'/adrienEditor',
+  //   templateUrl: 'views/adrienEditor.html',
+  //   controller: 'AdrienEditorCtrl',
+  //   data: {
+  //     css: 'styles/editor.css'
+  //   }
+  // })
+  //   .state('romainMap', {
+  //   url:'/romainMap',
+  //   templateUrl: 'views/romainMap.html',
+  //   controller: 'RomainMapCtrl',
+  //   data: {
+  //     css: 'styles/map.css'
+  //   }
+  // })
+  // .state('romainEditor', {
+  //   url:'/romainEditor',
+  //   templateUrl: 'views/romainEditor.html',
+  //   controller: 'RomainEditorCtrl',
+  //   data: {
+  //     css: 'styles/editor.css'
+  //   }
+  // })
 
 });
 

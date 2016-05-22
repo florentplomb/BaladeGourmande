@@ -10,6 +10,8 @@ mongoose = require('mongoose');
 //mongoose.connect(config.db);
 var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_CON_STRING);
+//mongoose.connect("mongodb://localhost/balademap");
+
 var db = mongoose.connection;
 db.on('error', function() {
 	throw new Error('unable to connect to database at ' + config.db);

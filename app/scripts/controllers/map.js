@@ -9,7 +9,9 @@ mapModule.controller('MapCtrl', ["$scope", "leafletData","$http", function($scop
 
 	var userId = "57283e06b065849c28b03ea8";
 	var cpt = 0;
-	var socket = io.connect('http://localhost:3000');
+	console.log("hostname : " + window.location.hostname);
+	var socket = io.connect(window.location.hostname);
+	//var socket = io.connect("http://localhost:3000");
 	socket.emit('get user map' , userId, "BaladeGroumande")
 	
 	socket.on('getItems', function(message) {
