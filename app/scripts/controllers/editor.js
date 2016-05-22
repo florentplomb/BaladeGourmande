@@ -5,7 +5,7 @@ var mapModule = angular.module('mapEditor');
 
 mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($scope, leafletData, $http) {
 
-	var userId = "5741973edcba0f4c11278925";
+	$scope.userId = "5741973edcba0f4c11278925";
 	var cpt = 0;
 	console.log("hostname : " + window.location.hostname);
 	var socket = io.connect(window.location.hostname);
@@ -217,7 +217,7 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 			
 			$scope.savedItems.push($scope.newMarker);
 			console.log($scope.savedItems);
-			socket.emit('itemsToSave', $scope.savedItems);
+			socket.emit('itemsToSave', $scope.savedItems,$scope.userId);
 
 			//	console.log($scope.savedItems)
 			//featureGroup.clearLayers(); // Ca empeche de modifier le groupe de item créée
@@ -253,7 +253,7 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 					}
 				})
 			});	
-			socket.emit('itemsToSave', $scope.savedItems);
+			socket.emit('itemsToSave', $scope.savedItems,$scope.userId);
 		};
 
 		function drawDeleted(e) {
@@ -266,7 +266,7 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 				})
 			});	
 			console.log($scope.savedItems);
-			socket.emit('itemsToSave', $scope.savedItems);
+			socket.emit('itemsToSave', $scope.savedItems,$scope.userId);
 		};
 
 		leafletData.getLayers().then(function(baselayers) {

@@ -42,18 +42,18 @@
 
 		//****** ItemController **********//
 
-		socket.on('itemsToSave', function(itemsToSave) {
+		socket.on('itemsToSave', function(itemsToSave,userId) {
 
-			var idAdri = "57283e06b065849c28b03ea8";
+			
 
-			User.findById(idAdri)
+			User.findById(userId)
 			.populate('mymap')
 				.exec(function(err, user) { // passer l'id quand on sauve un item. 
 					if (err) return handleError(err);
 					if (!user) return handleError(err);
 					MyMap.findOne({
 						'name': 'BaladeGroumande',
-						'user': idAdri
+						'user': userId
 					}, function(err, myMap) {
 						if (err) return handleError(err);
 						console.log(myMap);
