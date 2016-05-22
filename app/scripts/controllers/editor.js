@@ -5,7 +5,7 @@ var mapModule = angular.module('mapEditor');
 
 mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($scope, leafletData, $http) {
 
-	var userId = "57283e06b065849c28b03ea8";
+	var userId = "5741973edcba0f4c11278925";
 	var cpt = 0;
 	console.log("hostname : " + window.location.hostname);
 	var socket = io.connect(window.location.hostname);
