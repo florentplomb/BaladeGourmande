@@ -191,7 +191,7 @@ mapModule.controller('MapCtrl', ["$scope", "leafletData","$http", function($scop
 			
 			$scope.savedItems.push($scope.newMarker);
 			console.log($scope.savedItems);
-			socket.emit('itemsToSave', $scope.savedItems,$scope.$scope.userId);
+			socket.emit('itemsToSave', $scope.savedItems,$scope.userId);
 
 			//	console.log($scope.savedItems)
 			//featureGroup.clearLayers(); // Ca empeche de modifier le groupe de item créée
