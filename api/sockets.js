@@ -26,12 +26,12 @@
  			.deepPopulate('saveMap.items user -password')
  			.exec(function(err, myMap) {
  				if (err) return handleError(err);
- 				if (myMap.saveMap.length > 0) {
- 					socket.emit('map', myMap);
- 				}								
- 				console.log(myMap);
-
- 			})
+ 				if (myMap) {
+ 					if (myMap.saveMap.length > 0  ) {
+ 						socket.emit('map', myMap);
+ 					}								
+ 					console.log(myMap);
+ 				} 			})
 
  		})
 			//****** TEST **********//

@@ -18,7 +18,7 @@
  appMap.config(function($stateProvider, $urlRouterProvider) {  
    //
   // For any unmatched url, redirect to /state1
-  $urlRouterProvider.otherwise("/map");
+  $urlRouterProvider.otherwise("/");
   //
   // Now set up the states
   $stateProvider 
@@ -41,15 +41,31 @@
   .state('adrienMap', {
     url:'/adrienMap',
     templateUrl: 'views/adrienMap.html',
-    controller: 'AdrienCtrl',
+    controller: 'AdrienMapCtrl',
     data: {
-      css: 'styles/editor.css'
+      css: 'styles/map.css'
     }
   })
   .state('adrienEditor', {
     url:'/adrienEditor',
-    templateUrl: 'views/adrienMap.html',
-    controller: 'AdrienCtrl',
+    templateUrl: 'views/adrienEditor.html',
+    controller: 'AdrienEditorCtrl',
+    data: {
+      css: 'styles/editor.css'
+    }
+  })
+    .state('romainMap', {
+    url:'/romainMap',
+    templateUrl: 'views/romainMap.html',
+    controller: 'RomainMapCtrl',
+    data: {
+      css: 'styles/map.css'
+    }
+  })
+  .state('romainEditor', {
+    url:'/romainEditor',
+    templateUrl: 'views/romainEditor.html',
+    controller: 'RomainEditorCtrl',
     data: {
       css: 'styles/editor.css'
     }
