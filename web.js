@@ -9,7 +9,7 @@ glob = require('glob'),
 mongoose = require('mongoose');
 //mongoose.connect(config.db);
 var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGODB_CON_STRING);
+mongoose.connect("mongodb://editor1:1234@ds011883.mlab.com:11883/heroku_n130vxck");
 //mongoose.connect("mongodb://localhost/balademap");
 
 var db = mongoose.connection;
