@@ -14,7 +14,9 @@
     "font-awesome": "latest",
     "socket.io-client": "latest",
     "angular-ui-router": "latest",
-    "angular-ui-router-styles": "latest"
+    "angular-ui-router-styles": "latest",
+    "angular-simple-logger": "^0.1.7",
+    "Ionicons": "ionicons#^2.0.1"
   },
   "devDependencies": {
     "angular-mocks": "latest",
