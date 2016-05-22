@@ -12,7 +12,7 @@ mapModule.controller('MapCtrl', ["$scope", "leafletData","$http", function($scop
 	console.log("hostname : " + window.location.hostname);
 	var socket = io.connect(window.location.hostname);
 	//var socket = io.connect("http://localhost:3000");
-	socket.emit('get user map' , userId, "BaladeGroumande")
+	socket.emit('get user map' , $scope.userId, "BaladeGroumande")
 	
 	socket.on('getItems', function(message) {
 		alert('Le serveur a un message pour vous : ' + message);
@@ -191,7 +191,7 @@ mapModule.controller('MapCtrl', ["$scope", "leafletData","$http", function($scop
 			
 			$scope.savedItems.push($scope.newMarker);
 			console.log($scope.savedItems);
-			socket.emit('itemsToSave', $scope.savedItems,$scope.userId);
+			socket.emit('itemsToSave', $scope.savedItems,$scope.$scope.userId);
 
 			//	console.log($scope.savedItems)
 			//featureGroup.clearLayers(); // Ca empeche de modifier le groupe de item créée

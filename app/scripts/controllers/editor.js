@@ -11,7 +11,7 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 	var socket = io.connect(window.location.hostname);
 	//var socket = io.connect("http://localhost:3000");
 	
-	socket.emit('get user map' , userId, "BaladeGroumande")
+	socket.emit('get user map' , $scope.userId, "BaladeGroumande")
 
 	var drawnItems = new L.FeatureGroup();
 
@@ -217,7 +217,7 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 			
 			$scope.savedItems.push($scope.newMarker);
 			console.log($scope.savedItems);
-			socket.emit('itemsToSave', $scope.savedItems,$scope.userId);
+			socket.emit('itemsToSave', $scope.savedItems,$scope.$scope.userId);
 
 			//	console.log($scope.savedItems)
 			//featureGroup.clearLayers(); // Ca empeche de modifier le groupe de item créée
@@ -253,7 +253,7 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 					}
 				})
 			});	
-			socket.emit('itemsToSave', $scope.savedItems,$scope.userId);
+			socket.emit('itemsToSave', $scope.savedItems,$scope.$scope.userId);
 		};
 
 		function drawDeleted(e) {
@@ -266,7 +266,7 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 				})
 			});	
 			console.log($scope.savedItems);
-			socket.emit('itemsToSave', $scope.savedItems,$scope.userId);
+			socket.emit('itemsToSave', $scope.savedItems,$scope.$scope.userId);
 		};
 
 		leafletData.getLayers().then(function(baselayers) {
