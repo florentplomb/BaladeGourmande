@@ -14,7 +14,9 @@
 
 #info  a:hover { color: #ffcc66 }
 
-
+.leaflet-control-zoom-out {
+  font-size: 25px;
+  }
 
 #info{
   position: absolute;

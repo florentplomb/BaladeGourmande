@@ -151,8 +151,6 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 
 		}
 
-
-
 		map.on('draw:drawstart', function(e) {
 
 			$scope.radioMarkersChoice = $scope.markersStyle.wine;
