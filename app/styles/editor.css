@@ -18,7 +18,7 @@
   font-size: 25px;
   }
 
-#info{
+/*#info{
   position: absolute;
   top: 0%;
   right: 0%;
@@ -29,7 +29,16 @@
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
   font-size: 14px;
 
+}*/
+
+.leaflet-draw-toolbar .leaflet-draw-draw-polyline {
+  background-color: #FF4848;
 }
+
+.leaflet-draw-toolbar .leaflet-draw-draw-marker {
+  background-color: #48B3FF
+}
+
 
 
 /* Marker on map */
