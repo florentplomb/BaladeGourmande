@@ -111,7 +111,7 @@ mapModule.controller('MapCtrl', ["$scope", "leafletData","$http", function($scop
 							if(feature.geometry.type == "LineString"){
 								layer.setStyle({
 									"color": "#e049e3", //#e049e3 #ff7800
-									"weight": 3.5,
+									"weight": 4,
 									"opacity": 0.8
 								});
 
