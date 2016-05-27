@@ -9,7 +9,7 @@ glob = require('glob'),
 mongoose = require('mongoose');
 //mongoose.connect(config.db);
 var mongoose = require('mongoose');
-mongoURI = 'mongodb://localhost/balademap;
+mongoURI = 'mongodb://localhost/balademap';
 mongoose.connect(process.env.MONGOLAB_URI || mongoURI);
 //mongoose.connect("mongodb://localhost/balademap");
 
