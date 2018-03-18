@@ -4,7 +4,6 @@ var express = require('express'),
 
 /// *** Partie de la base de données  *** /// 
 
-config = require('./config/config'),
 glob = require('glob'),
 mongoose = require('mongoose');
 //mongoose.connect(config.db);
@@ -15,7 +14,7 @@ mongoose.connect(process.env.MONGOLAB_URI || mongoURI);
 
 var db = mongoose.connection;
 db.on('error', function() {
-	throw new Error('unable to connect to database at ' + config.db);
+	throw new Error('unable to connect to database at ');
 });
 
 /// *** Partie de la webapp sauf les routes   *** /// 

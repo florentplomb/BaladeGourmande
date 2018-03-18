@@ -8,10 +8,10 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 	$scope.userId = "5741973edcba0f4c11278925";
 	var cpt = 0;
 	console.log("hostname : " + window.location.hostname);
-	var socket = io.connect(window.location.hostname);
-	//var socket = io.connect("http://localhost:3000");
+	//var socket = io.connect(window.location.hostname);
+	var socket = io.connect("http://localhost:3000");
 	
-	socket.emit('get user map' , $scope.userId, "BaladeGroumande")
+	socket.emit('get map' , "BaladeGroumande")
 
 	var drawnItems = new L.FeatureGroup();
 
@@ -57,11 +57,11 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 		var featureGroup = L.featureGroup().addTo(map);
 
 
-		socket.on('map',function(userMap){
+		socket.on('map',function(myMap){
 
-			//console.log(userMap.saveMap);
+			//console.log(myMap.saveMap);
 
-			var geojson = userMap.saveMap[0].items;
+			var geojson = myMap.saveMap[0].items;
 			
 			var geojsonLayer = L.geoJson(geojson, {
 
@@ -94,7 +94,9 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 							var m = layer.toGeoJSON();
 							delete m._id;
 							delete m.__v;
-							m.properties.id = layer._leaflet_id;
+								m.properties.id = layer._leaflet_id;
+							
+
 							console.log(m);
 							$scope.savedItems.push(m);
 
@@ -110,7 +112,7 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 				featureGroup: featureGroup
 			},
 			draw: {
-				polygon: false,
+				polygon: true,
 				polyline: {
 					shapeOptions: {
 						color: '#d907ea',
@@ -210,6 +212,23 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 				layer.bindLabel((totalDistance / 1000).toFixed(3) + 'km');
 				$scope.newMarker.properties.distance = (totalDistance / 1000).toFixed(3)
 			}
+			// if (type === 'polygon') {
+
+			// 	var tempLatLng = null;
+			// 	var totalDistance = 0.00000;
+			// 	$.each(e.layer._latlngs, function(i, latlng) {
+			// 		if (tempLatLng == null) {
+			// 			tempLatLng = latlng;
+			// 			return;
+			// 		}
+			// 		totalDistance += tempLatLng.distanceTo(latlng);
+			// 		tempLatLng = latlng;
+			// 	});
+
+			// 	$scope.lineDistance = totalDistance;
+			// 	layer.bindLabel((totalDistance / 1000).toFixed(3) + 'km');
+			// 	$scope.newMarker.properties.distance = (totalDistance / 1000).toFixed(3)
+			// }
 			featureGroup.addLayer(e.layer);
 			$scope.newMarker.properties.id = layer._leaflet_id;
 			
@@ -226,7 +245,7 @@ mapModule.controller('EditorCtrl', ["$scope", "leafletData","$http", function($s
 
 
 		function drawEdited(e) {
-						var layers = e.layers;
+			var layers = e.layers;
 			layers.eachLayer(function(layer) {
 				angular.forEach($scope.savedItems, function(value, key) {
 					if (value.properties.id == layer._leaflet_id){

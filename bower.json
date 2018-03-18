@@ -16,7 +16,8 @@
     "angular-ui-router": "latest",
     "angular-ui-router-styles": "latest",
     "angular-simple-logger": "^0.1.7",
-    "Ionicons": "ionicons#^2.0.1"
+    "Ionicons": "ionicons#^2.0.1",
+    "leaflet-plugins": "^3.0.2"
   },
   "devDependencies": {
     "angular-mocks": "latest",

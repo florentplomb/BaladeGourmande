@@ -14,12 +14,7 @@ var myMapSchema = new Schema({
 	saveMap: [{
 		type: Schema.Types.ObjectId,
 		ref: 'SaveMap'
-	}],
-	user: {
-		type: Schema.Types.ObjectId,
-		ref: 'User'
-	}
-
+	}]
 });
 
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
@@ -27,7 +22,9 @@ myMapSchema.plugin(deepPopulate, {
 	populate: {
 		'saveMap': {
 			options: {
-				sort: {'createdOn' : -1 },
+				sort: {
+					'createdOn': -1
+				},
 				limit: 10
 
 			}

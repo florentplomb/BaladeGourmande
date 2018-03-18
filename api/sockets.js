@@ -18,19 +18,17 @@
  	io.sockets.on('connection', function(socket) {
 
 
- 		socket.on('get user map', function(userId, mapName) {
+ 		socket.on('get map', function(mapName) {
  			MyMap.findOne({
- 				'name': mapName,
- 				'user': userId
+ 				'name': mapName
  			})
- 			.deepPopulate('saveMap.items user -password')
+ 			.deepPopulate('saveMap.items')
  			.exec(function(err, myMap) {
  				if (err) return handleError(err);
  				if (myMap) {
  					if (myMap.saveMap.length > 0  ) {
  						socket.emit('map', myMap);
  					}								
- 					console.log(myMap);
  				} 			})
 
  		})
@@ -42,18 +40,15 @@
 
 		//****** ItemController **********//
 
-		socket.on('itemsToSave', function(itemsToSave,userId) {
+		socket.on('itemsToSave', function(itemsToSave) {
 
 			
 
-			User.findById(userId)
-			.populate('mymap')
-				.exec(function(err, user) { // passer l'id quand on sauve un item. 
-					if (err) return handleError(err);
-					if (!user) return handleError(err);
+			// passer l'id quand on sauve un item. 
+				
 					MyMap.findOne({
-						'name': 'BaladeGroumande',
-						'user': userId
+						'name': 'BaladeGroumande'
+						
 					}, function(err, myMap) {
 						if (err) return handleError(err);
 						console.log(myMap);
@@ -84,17 +79,9 @@
 
 										//console.log("saveMapSaved");
 										myMapSaved.saveMap.push(saveMapSaved._id)
-										myMapSaved.user = user._id
 										myMapSaved.save(function(err, mapupdated) {
 											if (err) return handleError(err);
 											console.log("mapUdpated");
-											user.myMaps.push(myMapSaved._id)
-											user.save(function(err, muserupdated) {
-												if (err) return handleError(err);
-												console.log("userUpdated");
-
-											})
-
 										})
 									})
 
@@ -136,8 +123,6 @@
 
 
 					})
-
-				})
 
 
 			});
