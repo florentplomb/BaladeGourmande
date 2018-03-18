@@ -13,7 +13,7 @@
     "Leaflet.awesome-markers": "^2.0.2",
     "font-awesome": "^4.5.0",
     "socket.io-client": "^1.4.5",
-    "angular-ui-router": "^0.3.0",
+    "angular-ui-router": "0.4.0",
     "angular-ui-router-styles": "^1.1.0"
   },
   "devDependencies": {
