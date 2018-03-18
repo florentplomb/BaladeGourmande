@@ -25,9 +25,9 @@ mapModule.controller('MapCtrl', ["$scope", "leafletData","$http", function($scop
 	angular.extend($scope, {
 		savedItems:[],
 		center: {
-			lat: 46.833056,
-			lng: 6.65,
-			zoom: 13
+			lat: 46.839,
+			lng: 6.671,
+			zoom: 14
 		},
 
 		layers: {
@@ -36,18 +36,7 @@ mapModule.controller('MapCtrl', ["$scope", "leafletData","$http", function($scop
 					name: 'OpenStreetMap',
 					url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 					type: 'xyz'
-				},			
-				googleHybrid: {
-					name: 'Google Satellite',
-					layerType: 'HYBRID',
-					type: 'google'
 				},
-				googleRoadmap: {
-					name: 'Google Streets',
-					layerType: 'ROADMAP',
-					type: 'google'
-				},
-
 				other: {
 					name: 'Forêt',
 					url: 'http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png',
